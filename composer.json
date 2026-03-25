@@ -1,0 +1,47 @@
+{
+    "name": "super-kernel/command",
+    "description": "The command component for super-kernel.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "php",
+        "super-kernel",
+        "command"
+    ],
+    "homepage": "https://github.com/super-kernel/command",
+    "support": {
+        "issues": "https://github.com/super-kernel/command/issues",
+        "source": "https://github.com/super-kernel/command"
+    },
+    "autoload": {
+        "psr-4": {
+            "SuperKernel\\Command\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "SuperKernelTest\\Command\\": "tests/src/"
+        }
+    },
+    "config": {
+        "classmap-authoritative": true,
+        "optimize-autoloader": true,
+        "sort‑packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": "~8.4.0",
+        "super-kernel/attribute": "~1.0.0",
+        "super-kernel/contract": "~1.0.0"
+    },
+    "require-dev": {
+        "super-kernel/annotator": "~1.0.0",
+        "super-kernel/composer-resolver": "~1.0.0",
+        "super-kernel/di": "~1.0.0",
+        "super-kernel/event-dispatcher": "~1.0.0",
+        "super-kernel/framework": "~1.0.0",
+        "super-kernel/path-resolver": "~1.0.0",
+        "super-kernel/reflector": "~1.0.0"
+    }
+}
