@@ -28,20 +28,13 @@
         "optimize-autoloader": true,
         "sort‑packages": true
     },
-    "minimum-stability": "stable",
-    "prefer-stable": true,
+    "minimum-stability": "dev",
     "require": {
         "php": "~8.4.0",
-        "super-kernel/attribute": "~1.0.0",
-        "super-kernel/contract": "~1.0.0"
+        "super-kernel/attribute": "dev-main",
+        "super-kernel/contract": "dev-main"
     },
     "require-dev": {
-        "super-kernel/annotator": "~1.0.0",
-        "super-kernel/composer-resolver": "~1.0.0",
-        "super-kernel/di": "~1.0.0",
-        "super-kernel/event-dispatcher": "~1.0.0",
-        "super-kernel/framework": "~1.0.0",
-        "super-kernel/path-resolver": "~1.0.0",
-        "super-kernel/reflector": "~1.0.0"
+        "super-kernel/framework": "dev-main"
     }
 }
