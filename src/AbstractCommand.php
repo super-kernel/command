@@ -18,17 +18,18 @@ abstract class AbstractCommand extends SymfonyCommand
 	 * @throws ContainerExceptionInterface
 	 * @throws NotFoundExceptionInterface
 	 */
-	public function __construct(private readonly ContainerInterface $container)
+	public function __construct(protected readonly ContainerInterface $container)
 	{
-		/* @var AnnotationCollectorInterface $attributeCollector */
-		$attributeCollector = $this->container->get(AnnotationCollectorInterface::class);
+		/* @var AnnotationCollectorInterface $annotationCollector */
+		$annotationCollector = $this->container->get(AnnotationCollectorInterface::class);
 
-		$attributes = $attributeCollector->getClassAttributes(static::class);
-		foreach ($attributes as $attribute) {
-			$command = $attribute->getInstance();
-			if (!($command instanceof Command)) {
+		$annotations = $annotationCollector->getAnnotationsByClass(static::class);
+		foreach ($annotations as $annotation) {
+			if ($annotation->getName() !== Command::class) {
 				continue;
 			}
+
+			$command = $annotation->getInstance();
 
 			$this->setName($command->name);
 

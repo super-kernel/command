@@ -20,7 +20,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "SuperKernelTest\\Command\\": "tests/src/"
+            "SuperKernelTest\\Command\\": "tests/"
         }
     },
     "config": {
