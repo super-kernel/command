@@ -22,6 +22,8 @@ use function sprintf;
 #[FactoryProvider(CommandLoaderInterface::class)]
 final readonly class CommandLoaderProvider
 {
+    private const string INVALID_ALIASES_MESSAGE = 'Command aliases on %s must be a list of non-empty strings.';
+
     /** @throws InvalidArgumentException When a command declaration or registration is invalid */
     public function __invoke(
         ContainerInterface           $container,
@@ -53,17 +55,12 @@ final readonly class CommandLoaderProvider
             }
 
             if (!array_is_list($declaration->aliases)) {
-                throw new InvalidArgumentException(
-                    sprintf('Command aliases on %s must be a list of non-empty strings.', $className),
-                );
+                throw new InvalidArgumentException(sprintf(self::INVALID_ALIASES_MESSAGE, $className));
             }
 
             foreach ($declaration->aliases as $alias) {
                 if (!is_string($alias) || '' === $alias) {
-                    throw new InvalidArgumentException(sprintf(
-                        'Command aliases on %s must be a list of non-empty strings.',
-                        $className,
-                    ));
+                    throw new InvalidArgumentException(sprintf(self::INVALID_ALIASES_MESSAGE, $className));
                 }
             }
 
