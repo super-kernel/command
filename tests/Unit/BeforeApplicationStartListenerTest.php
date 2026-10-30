@@ -88,6 +88,7 @@ final class BeforeApplicationStartListenerTest extends TestCase
         $listener->process(new BeforeApplicationStart($application));
 
         $output = new BufferedOutput();
+        /** @noinspection PhpMethodParametersCountMismatchInspection Symfony's inherited run() has two parameters. */
         $status = $application->run(new ArgvInput([
             'console',
             'list',
@@ -99,6 +100,7 @@ final class BeforeApplicationStartListenerTest extends TestCase
         self::assertSame([], $container->requested);
 
         $output = new BufferedOutput();
+        /** @noinspection PhpMethodParametersCountMismatchInspection Symfony's inherited run() has two parameters. */
         $status = $application->run(new ArgvInput([
             'console',
             'app:alias',

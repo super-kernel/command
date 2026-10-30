@@ -57,30 +57,25 @@ final readonly class CommandLoader implements CommandLoaderInterface
             $names,
             $declaration->description ?? '',
             $declaration->hidden,
-            fn(): Command => $this->resolve($className),
+            /**
+             * @throws ContainerExceptionInterface When the command entry is missing or cannot be resolved
+             * @throws UnexpectedValueException    When the resolved entry is not a Command
+             */
+            function () use ($className): Command {
+                $command = $this->container->get($className);
+
+                if (!$command instanceof Command) {
+                    throw new UnexpectedValueException(sprintf(
+                        'Container entry %s must resolve to %s, %s returned.',
+                        $className,
+                        Command::class,
+                        get_debug_type($command),
+                    ));
+                }
+
+                return $command;
+            },
         );
-    }
-
-    /**
-     * @psalm-param class-string<Command> $className
-     *
-     * @throws ContainerExceptionInterface When the command entry is missing or cannot be resolved
-     * @throws UnexpectedValueException    When the resolved entry is not a Command
-     */
-    private function resolve(string $className): Command
-    {
-        $command = $this->container->get($className);
-
-        if (!$command instanceof Command) {
-            throw new UnexpectedValueException(sprintf(
-                'Container entry %s must resolve to %s, %s returned.',
-                $className,
-                Command::class,
-                get_debug_type($command),
-            ));
-        }
-
-        return $command;
     }
 
     public function has(string $name): bool
