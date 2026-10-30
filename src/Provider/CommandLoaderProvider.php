@@ -44,7 +44,36 @@ final readonly class CommandLoaderProvider
 
             $declaration = $metadata->attribute();
 
-            foreach (self::names($declaration, $className) as $name) {
+            if ('' === $declaration->name) {
+                throw new InvalidArgumentException(sprintf(
+                    '%s on %s must declare a non-empty command name.',
+                    AttributeCommand::class,
+                    $className,
+                ));
+            }
+
+            if (!array_is_list($declaration->aliases)) {
+                throw new InvalidArgumentException(
+                    sprintf('Command aliases on %s must be a list of non-empty strings.', $className),
+                );
+            }
+
+            foreach ($declaration->aliases as $alias) {
+                if (!is_string($alias) || '' === $alias) {
+                    throw new InvalidArgumentException(sprintf(
+                        'Command aliases on %s must be a list of non-empty strings.',
+                        $className,
+                    ));
+                }
+            }
+
+            /** @var list<non-empty-string> $names */
+            $names = [
+                $declaration->name,
+                ...$declaration->aliases,
+            ];
+
+            foreach ($names as $name) {
                 if (array_key_exists($name, $commands)) {
                     throw new InvalidArgumentException(sprintf(
                         'Command name "%s" is declared by both %s and %s.',
@@ -61,43 +90,5 @@ final readonly class CommandLoaderProvider
         }
 
         return new CommandLoader($container, $commands, $declarations);
-    }
-
-    /**
-     * @param class-string<Command> $className
-     *
-     * @return list<non-empty-string>
-     *
-     * @throws InvalidArgumentException When a name or alias is empty or aliases are not a string list
-     */
-    private static function names(AttributeCommand $declaration, string $className): array
-    {
-        if ('' === $declaration->name) {
-            throw new InvalidArgumentException(sprintf(
-                '%s on %s must declare a non-empty command name.',
-                AttributeCommand::class,
-                $className,
-            ));
-        }
-
-        if (!array_is_list($declaration->aliases)) {
-            throw new InvalidArgumentException(
-                sprintf('Command aliases on %s must be a list of non-empty strings.', $className),
-            );
-        }
-
-        foreach ($declaration->aliases as $alias) {
-            if (!is_string($alias) || '' === $alias) {
-                throw new InvalidArgumentException(sprintf(
-                    'Command aliases on %s must be a list of non-empty strings.',
-                    $className,
-                ));
-            }
-        }
-
-        return [
-            $declaration->name,
-            ...$declaration->aliases,
-        ];
     }
 }
