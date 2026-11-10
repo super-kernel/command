@@ -6,10 +6,10 @@
     "require": {
         "php": ">=8.4.27 <8.5",
         "psr/container": "^2.0.2",
-        "super-kernel/annotator": "dev-main",
-        "super-kernel/attribute": "dev-main",
-        "super-kernel/contract": "dev-main",
-        "super-kernel/event": "dev-main",
+        "super-kernel/annotator": "self.version",
+        "super-kernel/attribute": "self.version",
+        "super-kernel/contract": "self.version",
+        "super-kernel/event": "self.version",
         "symfony/console": "^8.1.9"
     },
     "require-dev": {
